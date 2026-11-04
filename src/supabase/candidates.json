@@ -1,0 +1,543 @@
+[
+  {
+    "candidate_id": 101,
+    "display_name": "Candidate 101",
+    "headline": "Senior Frontend Engineer",
+    "years_experience": 7,
+    "seniority": "senior",
+    "skills": [
+      "react",
+      "typescript",
+      "redux",
+      "jest"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Frontend engineer focused on React design systems and large single-page apps."
+  },
+  {
+    "candidate_id": 102,
+    "display_name": "Candidate 102",
+    "headline": "Frontend Developer",
+    "years_experience": 4,
+    "seniority": "mid",
+    "skills": [
+      "react",
+      "javascript",
+      "tailwind",
+      "next.js"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Builds responsive marketing sites and dashboards with React and Next.js."
+  },
+  {
+    "candidate_id": 103,
+    "display_name": "Candidate 103",
+    "headline": "Lead Frontend Engineer",
+    "years_experience": 10,
+    "seniority": "lead",
+    "skills": [
+      "react",
+      "typescript",
+      "graphql",
+      "next.js",
+      "storybook"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 1 month",
+    "summary": "Leads frontend teams and owns component libraries for SaaS products."
+  },
+  {
+    "candidate_id": 104,
+    "display_name": "Candidate 104",
+    "headline": "Junior Frontend Developer",
+    "years_experience": 1,
+    "seniority": "entry",
+    "skills": [
+      "javascript",
+      "html",
+      "css",
+      "react"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Recent graduate with internship experience building React interfaces."
+  },
+  {
+    "candidate_id": 105,
+    "display_name": "Candidate 105",
+    "headline": "Senior Vue.js Developer",
+    "years_experience": 6,
+    "seniority": "senior",
+    "skills": [
+      "vue",
+      "typescript",
+      "nuxt",
+      "pinia"
+    ],
+    "timezone_offsets": [
+      1
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Vue specialist who migrated several apps from Vue 2 to Vue 3."
+  },
+  {
+    "candidate_id": 106,
+    "display_name": "Candidate 106",
+    "headline": "Angular Developer",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "angular",
+      "typescript",
+      "rxjs"
+    ],
+    "timezone_offsets": [
+      3
+    ],
+    "availability": "available now",
+    "summary": "Builds enterprise Angular apps with complex forms and state."
+  },
+  {
+    "candidate_id": 107,
+    "display_name": "Candidate 107",
+    "headline": "Senior Python Backend Engineer",
+    "years_experience": 8,
+    "seniority": "senior",
+    "skills": [
+      "python",
+      "fastapi",
+      "postgresql",
+      "docker"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Designs REST APIs and data models for high-traffic Python services."
+  },
+  {
+    "candidate_id": 108,
+    "display_name": "Candidate 108",
+    "headline": "Python Developer",
+    "years_experience": 3,
+    "seniority": "mid",
+    "skills": [
+      "python",
+      "django",
+      "postgresql",
+      "celery"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Django developer building internal tools and background job pipelines."
+  },
+  {
+    "candidate_id": 109,
+    "display_name": "Candidate 109",
+    "headline": "Backend Engineer (Node.js)",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "node.js",
+      "typescript",
+      "express",
+      "mongodb"
+    ],
+    "timezone_offsets": [
+      -6
+    ],
+    "availability": "available in 1 week",
+    "summary": "Builds Node.js APIs and integrations for e-commerce platforms."
+  },
+  {
+    "candidate_id": 110,
+    "display_name": "Candidate 110",
+    "headline": "Senior Node.js Engineer",
+    "years_experience": 7,
+    "seniority": "senior",
+    "skills": [
+      "node.js",
+      "typescript",
+      "nestjs",
+      "postgresql",
+      "aws"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 3 weeks",
+    "summary": "Owns backend services on AWS with NestJS and event-driven design."
+  },
+  {
+    "candidate_id": 111,
+    "display_name": "Candidate 111",
+    "headline": "Java Backend Engineer",
+    "years_experience": 6,
+    "seniority": "senior",
+    "skills": [
+      "java",
+      "spring boot",
+      "postgresql",
+      "kafka"
+    ],
+    "timezone_offsets": [
+      1
+    ],
+    "availability": "available in 1 month",
+    "summary": "Builds Spring Boot microservices for fintech systems."
+  },
+  {
+    "candidate_id": 112,
+    "display_name": "Candidate 112",
+    "headline": "Go Backend Engineer",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "go",
+      "grpc",
+      "postgresql",
+      "kubernetes"
+    ],
+    "timezone_offsets": [
+      -8
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Writes high-performance Go services and internal platform tools."
+  },
+  {
+    "candidate_id": 113,
+    "display_name": "Candidate 113",
+    "headline": "Full Stack Engineer",
+    "years_experience": 6,
+    "seniority": "senior",
+    "skills": [
+      "react",
+      "typescript",
+      "node.js",
+      "postgresql"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available now",
+    "summary": "Ships end-to-end features across React frontends and Node.js backends."
+  },
+  {
+    "candidate_id": 114,
+    "display_name": "Candidate 114",
+    "headline": "Full Stack Developer",
+    "years_experience": 3,
+    "seniority": "mid",
+    "skills": [
+      "react",
+      "python",
+      "django",
+      "postgresql"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available in 1 week",
+    "summary": "Builds full stack web apps with React and Django."
+  },
+  {
+    "candidate_id": 115,
+    "display_name": "Candidate 115",
+    "headline": "Full Stack Engineer (Ruby)",
+    "years_experience": 7,
+    "seniority": "senior",
+    "skills": [
+      "ruby",
+      "ruby on rails",
+      "react",
+      "postgresql"
+    ],
+    "timezone_offsets": [
+      -6
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Rails engineer who maintains large SaaS monoliths with React frontends."
+  },
+  {
+    "candidate_id": 116,
+    "display_name": "Candidate 116",
+    "headline": "Senior DevOps Engineer",
+    "years_experience": 8,
+    "seniority": "senior",
+    "skills": [
+      "kubernetes",
+      "aws",
+      "terraform",
+      "ci/cd"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 1 month",
+    "summary": "Runs Kubernetes platforms and infrastructure as code on AWS."
+  },
+  {
+    "candidate_id": 117,
+    "display_name": "Candidate 117",
+    "headline": "DevOps Engineer",
+    "years_experience": 4,
+    "seniority": "mid",
+    "skills": [
+      "docker",
+      "aws",
+      "github actions",
+      "linux"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Automates CI/CD pipelines and container deployments."
+  },
+  {
+    "candidate_id": 118,
+    "display_name": "Candidate 118",
+    "headline": "Site Reliability Engineer",
+    "years_experience": 6,
+    "seniority": "senior",
+    "skills": [
+      "kubernetes",
+      "gcp",
+      "prometheus",
+      "terraform"
+    ],
+    "timezone_offsets": [
+      1
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Improves reliability and monitoring for cloud-native services."
+  },
+  {
+    "candidate_id": 119,
+    "display_name": "Candidate 119",
+    "headline": "Senior Data Engineer",
+    "years_experience": 7,
+    "seniority": "senior",
+    "skills": [
+      "python",
+      "sql",
+      "airflow",
+      "spark",
+      "snowflake"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 3 weeks",
+    "summary": "Builds batch and streaming data pipelines for analytics teams."
+  },
+  {
+    "candidate_id": 120,
+    "display_name": "Candidate 120",
+    "headline": "Data Engineer",
+    "years_experience": 3,
+    "seniority": "mid",
+    "skills": [
+      "python",
+      "sql",
+      "dbt",
+      "bigquery"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Models analytics data with dbt and BigQuery."
+  },
+  {
+    "candidate_id": 121,
+    "display_name": "Candidate 121",
+    "headline": "Data Analyst",
+    "years_experience": 2,
+    "seniority": "entry",
+    "skills": [
+      "sql",
+      "python",
+      "power bi",
+      "excel"
+    ],
+    "timezone_offsets": [
+      3
+    ],
+    "availability": "available now",
+    "summary": "Builds dashboards and reports for business teams."
+  },
+  {
+    "candidate_id": 122,
+    "display_name": "Candidate 122",
+    "headline": "Senior Machine Learning Engineer",
+    "years_experience": 7,
+    "seniority": "senior",
+    "skills": [
+      "python",
+      "pytorch",
+      "nlp",
+      "mlops"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 1 month",
+    "summary": "Trains and deploys NLP models to production."
+  },
+  {
+    "candidate_id": 123,
+    "display_name": "Candidate 123",
+    "headline": "Machine Learning Engineer",
+    "years_experience": 4,
+    "seniority": "mid",
+    "skills": [
+      "python",
+      "tensorflow",
+      "scikit-learn",
+      "computer vision"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Builds computer vision models and evaluation pipelines."
+  },
+  {
+    "candidate_id": 124,
+    "display_name": "Candidate 124",
+    "headline": "AI Engineer (LLM Applications)",
+    "years_experience": 3,
+    "seniority": "mid",
+    "skills": [
+      "python",
+      "llm",
+      "langchain",
+      "rag",
+      "fastapi"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Builds LLM-powered applications with retrieval and structured outputs."
+  },
+  {
+    "candidate_id": 125,
+    "display_name": "Candidate 125",
+    "headline": "Senior Mobile Engineer (React Native)",
+    "years_experience": 6,
+    "seniority": "senior",
+    "skills": [
+      "react native",
+      "typescript",
+      "ios",
+      "android"
+    ],
+    "timezone_offsets": [
+      -5
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Ships cross-platform mobile apps with React Native."
+  },
+  {
+    "candidate_id": 126,
+    "display_name": "Candidate 126",
+    "headline": "Flutter Developer",
+    "years_experience": 4,
+    "seniority": "mid",
+    "skills": [
+      "flutter",
+      "dart",
+      "firebase"
+    ],
+    "timezone_offsets": [
+      3
+    ],
+    "availability": "available now",
+    "summary": "Builds Flutter apps with Firebase backends."
+  },
+  {
+    "candidate_id": 127,
+    "display_name": "Candidate 127",
+    "headline": "iOS Engineer",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "swift",
+      "swiftui",
+      "ios"
+    ],
+    "timezone_offsets": [
+      -8
+    ],
+    "availability": "available in 1 month",
+    "summary": "Builds native iOS apps with SwiftUI."
+  },
+  {
+    "candidate_id": 128,
+    "display_name": "Candidate 128",
+    "headline": "QA Automation Engineer",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "cypress",
+      "playwright",
+      "javascript",
+      "ci/cd"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available in 1 week",
+    "summary": "Writes end-to-end test suites and quality gates in CI."
+  },
+  {
+    "candidate_id": 129,
+    "display_name": "Candidate 129",
+    "headline": "Senior QA Engineer",
+    "years_experience": 8,
+    "seniority": "senior",
+    "skills": [
+      "selenium",
+      "java",
+      "api testing",
+      "jmeter"
+    ],
+    "timezone_offsets": [
+      1
+    ],
+    "availability": "available in 2 weeks",
+    "summary": "Leads test strategy, API testing and performance testing."
+  },
+  {
+    "candidate_id": 130,
+    "display_name": "Candidate 130",
+    "headline": "UI/UX Designer",
+    "years_experience": 5,
+    "seniority": "mid",
+    "skills": [
+      "figma",
+      "ui design",
+      "ux research",
+      "design systems"
+    ],
+    "timezone_offsets": [
+      2
+    ],
+    "availability": "available now",
+    "summary": "Designs product interfaces and maintains design systems in Figma."
+  }
+]

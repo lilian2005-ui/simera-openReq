@@ -1,0 +1,491 @@
+{
+  "name": "Open Rec Lite - 1. Job Discovery",
+  "nodes": [
+    {
+      "id": "ffd5d182-ce56-4d2e-9924-12a881dea44f",
+      "name": "Run Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "38ef118c-c759-4e38-b4c1-06b8aef22b77",
+      "name": "Daily at 07:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        500
+      ],
+      "disabled": true,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "8bb3987d-67f4-42cc-81ea-2248a9c462ca",
+      "name": "Start Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        400
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/rpc/start_pipeline_run",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_trigger: $('Daily at 07:00').isExecuted ? 'scheduled' : 'manual' }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      }
+    },
+    {
+      "id": "cd559e67-db3e-4c1e-a9bf-2e557f38f72c",
+      "name": "Run Allowed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "96e32b02-bee9-4fc4-8bc6-c3eadf776288",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "05182840-5d46-4509-88e9-9600a31b4bec",
+      "name": "Stop: Run Already Active",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        700,
+        560
+      ],
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      }
+    },
+    {
+      "id": "49955fda-8724-46ce-94c4-9b47e4c2c260",
+      "name": "Get Search Query",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/app_setting",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "eq.search_query"
+            },
+            {
+              "name": "select",
+              "value": "value"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      }
+    },
+    {
+      "id": "c57d48cc-9bc9-4460-9d2a-eac585ac57d7",
+      "name": "Fetch Himalayas Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        940,
+        300
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "parameters": {
+        "method": "GET",
+        "url": "https://himalayas.app/jobs/api/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.value || 'software engineer' }}"
+            },
+            {
+              "name": "sort",
+              "value": "recent"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "55107247-ebfc-492a-ba94-4fad91e4102f",
+      "name": "Normalise Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Normalise Himalayas postings into our JobPosting shape (Data Contract, stage 1).\n// Rules: description_text = HTML removed + spaces collapsed; dates -> ISO 8601 UTC; unknown -> null (never guess).\nconst body = $input.first().json;\nconst jobs = Array.isArray(body.jobs) ? body.jobs : [];\n\nconst decode = s => s\n  .replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>')\n  .replace(/&quot;/g, '\"').replace(/&#39;|&#x27;/g, \"'\").replace(/&amp;/g, '&');\n\nconst clean = html => decode(String(html || '')\n    .replace(/<(script|style)[^>]*>[\\s\\S]*?<\\/\\1>/gi, ' ')\n    .replace(/<[^>]+>/g, ' '))\n  .replace(/\\s+/g, ' ')\n  .trim();\n\n// Himalayas sends Unix timestamps in milliseconds; accept seconds too, just in case.\nconst toIso = v => (typeof v === 'number' && v > 0) ? new Date(v < 1e12 ? v * 1000 : v).toISOString() : null;\n\n// Countries the company can hire in (Himalayas \"locationRestrictions\"). Empty list = open worldwide.\n// Accepts plain strings or objects like { name: \"Germany\" }.\nconst places = v => (Array.isArray(v) ? v : [])\n  .map(x => (typeof x === 'string' ? x : (x && (x.name || x.country || x.label)) || ''))\n  .map(x => String(x).trim()).filter(Boolean);\n\nconst out = jobs.map(j => ({\n  external_id: j.guid ?? null,\n  url: j.applicationLink ?? null,\n  title: (j.title || '').trim(),\n  company_name: (j.companyName || '').trim(),\n  description_raw: j.description || '',\n  description_text: clean(j.description),\n  posted_at: toIso(j.pubDate),\n  expires_at: toIso(j.expiryDate),\n  location_restrictions: places(j.locationRestrictions),\n}));\n\nreturn [{ json: { run_id: $('Start Run').first().json.run_id, count: out.length, jobs: out } }];\n"
+      }
+    },
+    {
+      "id": "bff00874-f84c-4c2a-92ed-e4646d03e448",
+      "name": "Ingest Jobs (dedupe + edit check)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/rpc/ingest_jobs",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_run_id: $json.run_id, p_jobs: $json.jobs, p_source: 'himalayas' }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "c51feb1f-ba5a-4e72-aa6a-1f4fad0daaf7",
+      "name": "Finish Run: Completed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1660,
+        140
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/rpc/finish_pipeline_run",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_run_id: $('Start Run').first().json.run_id, p_status: 'completed' }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      }
+    },
+    {
+      "id": "a285edbf-b3dc-40a8-8371-f5be33f3abb8",
+      "name": "Finish Run: Failed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1660,
+        460
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/rpc/finish_pipeline_run",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_run_id: $('Start Run').first().json.run_id, p_status: 'failed', p_errors: [{ stage: 'discovery', source: 'himalayas', error: String($json.error?.message || $json.error || 'unknown error') }] }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      }
+    },
+    {
+      "id": "efb05e2c-7437-4def-92e8-811e5136fd6c",
+      "name": "Run Step 2: Understand & Score",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1900,
+        140
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "REPLACE_WITH_ID",
+          "cachedResultName": "Open Rec Lite - 2. Understand & Score Jobs"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "9215e457-b08b-4d0b-9f6a-81e07a66e8b6",
+      "name": "Run Step 3: Leads & Drafts",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2140,
+        140
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "REPLACE_WITH_ID",
+          "cachedResultName": "Open Rec Lite - 3. Score Leads & Write Drafts"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "5d0e9473-f2a5-449d-a053-21ef46b1aaa5",
+      "name": "Close Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2380,
+        140
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://pvkvyxepohumhykkrror.supabase.co/rest/v1/rpc/close_run",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_run_id: $('Start Run').first().json.run_id }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_YOUR_SUPABASE_CREDENTIAL",
+          "name": "Supabase - Open Rec Lite"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Run Manually": {
+      "main": [
+        [
+          {
+            "node": "Start Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily at 07:00": {
+      "main": [
+        [
+          {
+            "node": "Start Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Run": {
+      "main": [
+        [
+          {
+            "node": "Run Allowed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Allowed?": {
+      "main": [
+        [
+          {
+            "node": "Get Search Query",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop: Run Already Active",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Search Query": {
+      "main": [
+        [
+          {
+            "node": "Fetch Himalayas Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Himalayas Jobs": {
+      "main": [
+        [
+          {
+            "node": "Normalise Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Finish Run: Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalise Jobs": {
+      "main": [
+        [
+          {
+            "node": "Ingest Jobs (dedupe + edit check)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest Jobs (dedupe + edit check)": {
+      "main": [
+        [
+          {
+            "node": "Finish Run: Completed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Finish Run: Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finish Run: Completed": {
+      "main": [
+        [
+          {
+            "node": "Run Step 2: Understand & Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Step 2: Understand & Score": {
+      "main": [
+        [
+          {
+            "node": "Run Step 3: Leads & Drafts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Step 3: Leads & Drafts": {
+      "main": [
+        [
+          {
+            "node": "Close Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Gaza"
+  },
+  "pinData": {}
+}
