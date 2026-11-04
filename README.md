@@ -1,13 +1,14 @@
 <p align="center"><img src="assets/simera-logo.png" width="90" alt="Simera"></p>
 
-<h1 align="center">Open Rec Lite</h1>
+<h1 align="center">Open Rec</h1>
 <p align="center"><b>AI-powered lead discovery for Simera's Business Development team</b><br>
 AI reads and writes · Rules decide · People approve</p>
 
 ---
 
 ## Project Overview
-Open Rec Lite هو نظام داخلي لـ Simera، بيجهّز لفريق تطوير الأعمال والمبيعات (BD / Sales) كل يوم الصبح قائمة شركات بتوظّف أدوار بتقدر مواهب Simera تغطيها، ولكل شركة مسودة رسالة أولى جاهزة للمراجعة.
+Open Rec 
+هو نظام داخلي لـ Simera، بيجهّز لفريق تطوير الأعمال والمبيعات (BD / Sales) كل يوم الصبح قائمة شركات بتوظّف أدوار بتقدر مواهب Simera تغطيها، ولكل شركة مسودة رسالة أولى جاهزة للمراجعة.
 
 نوع الحل: **AI-Powered Workflow**. هو مش Agent ولا RAG: مراحل ثابتة، الذكاء الاصطناعي بيقرأ وبيكتب جواها، والقواعد هي اللي بتقرر.
 
